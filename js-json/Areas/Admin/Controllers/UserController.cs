@@ -26,6 +26,7 @@ namespace js_json.Areas.Admin.Controllers
                 //Define request data format  
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                try{
                 HttpResponseMessage Res = await client.GetAsync("api/users?page=2");
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (Res.IsSuccessStatusCode)
@@ -35,6 +36,11 @@ namespace js_json.Areas.Admin.Controllers
                     //Deserializing the response recieved from web api and storing into the Employee list  
                     userInfo = JsonConvert.DeserializeObject<JsonModel>(EmpResponse);
                     Console.Write(userInfo);
+                }
+                }
+                catch(excaption ex)
+                {
+                throw ex;
                 }
                 //returning the employee list to view  
                 return View(userInfo);
