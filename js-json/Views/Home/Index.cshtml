@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div>
+    <input type="text" id="Search" placeholder="Nhập thông tin muốn tìm kiếm" width="50" />
+    <h2>Name: <span id="opName"></span></h2>
+</div>
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Logo</th>
+            <th>Status</th>
+            <th><button class="btn btn-success">Add new</button></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    var url = "https://5f5dba248b224700167c51e8.mockapi.io/Sale-Manager";
+    fetch(url, {
+        method: "GET"
+    })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('tbody').innerHTML = '';
+            if (data.length > 0) {
+                var content = ``;
+                data.forEach(element => {
+                content += `<tr id="row-${element.id}">
+                <td>${element.id}</td>
+                <td>${element.Name}</td>
+                <td><img src="${element.Logo}" width="100px"</td>
+                <td>${element.Status}</td>
+                <td><button class="btn btn-info" >Sửa</button>
+                <button class="btn btn-danger" onclick="removeElement(${element.id})">Xóa</button></td>
+                </tr>`;
+                });
+                document.querySelector('tbody').innerHTML = content;
+            }
+        });
+    function removeElement(id) {
+        var removeNode = document.querySelector('#row-' + id);
+        removeNode.parentNode.removeChild(removeNode);
+        var removeUrl = url + "/" + id;
+        fetch(removeUrl, {
+            method:"DELETE"
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+    }
+    var search = document.querySelector('#Search');
+    search.onkeydown = function (event) {
+        if (event.keyCode === 13) {
+            var searchId = event.target.value;
+            var requestUrl = url + "/" + searchId;
+            fetch(requestUrl, {
+                method: "GET"
+            }).then(response => response.json())
+                .then(data => {
+                    // hiên thị thông số về trên html
+                    document.querySelector('#opName').innerHTML = data.Name;
+                    console.log(data);
+                })
+        }
+    }
+
+        ////.then(function (data) {   
+        ////    var content = ``;
+        ////    data.forEach(function (item) {
+        ////        content += `<tr>
+        ////        <td>${item.id}</td>
+        ////        <td>${item.Name}</td>
+        ////        <td><img src="${item.Logo}" width="100px"</td>
+        ////        <td>${item.Status}</td>
+        ////        <td><button class="btn btn-info">Sửa</button>
+        ////        <button class="btn btn-danger">Xóa</button></td>
+        ////        </tr>`;
+        ////    });
+        ////    document.querySelector('tbody').innerHTML = content;
+        //});
+</script>

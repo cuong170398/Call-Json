@@ -1,0 +1,113 @@
+﻿@model js_json.Areas.Admin.Models.JsonModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div style="padding-left:30px;padding-right:30px">
+        <h4>JsonModel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.page):
+                @Html.DisplayFor(model => model.page)
+
+            </dt>
+            <dd>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.per_page):
+                @Html.DisplayFor(model => model.per_page)
+
+            </dt>
+
+            <dd>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.total):
+                @Html.DisplayFor(model => model.total)
+            </dt>
+
+            <dd>
+                
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.total_pages):
+                @Html.DisplayFor(model => model.total_pages)
+            </dt>
+
+            <dd>
+                
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.data)
+            </dt>
+
+            <dd>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            First_Name
+                        </th>
+                        <th>
+                            Last_Name
+                        </th>
+                        <th>
+                            Avatar
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.data)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.first_name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.last_name)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.avatar)*@
+                                <img src="@item.avatar" />
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ad)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ad)
+            </dd>
+
+        </dl>
+    </div>
+</body>
+</html>
